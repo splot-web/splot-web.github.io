@@ -130,11 +130,11 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
   constructor already allow certain customization, but creating your own custom variants gives complete freedom to 
   modify figure drawing behaviour.</p>
 <h2><a href="#pipeline-outline" name="pipeline-outline" class="anchor"><span class="anchor-link"></span></a>Pipeline Outline</h2>
-<p>After all plot elements are added to the <code>Figure</code> users can call either <code>crateImage(width, height)</code> to 
-  create an image or <code>show(width, height)</code> to display an interactive window. In both cases blank <code>BufferedImage</code> 
+<p>After all plot elements are added to the <code>Figure</code> users can either call <code>crateImage(width, height)</code> function to 
+  create an image or call <code>show(width, height)</code> to display an interactive window. In both cases blank <code>BufferedImage</code> 
   is created and then drawing pipeline is applied to it. Steps of the pipeline are shown in the figure below.</p>
 <p><img src="splot-pipeline-3.png" /></p>
-<p>All of the these steps, from 1 to 7, are performed by externally supplied functions. Plot elements drawn in stage 2 are 
+<p>All of these steps, from 1 to 7, are performed by externally supplied functions. Plot elements drawn in stage 2 are 
   the only ones that users usually explicitly add to the figure. All other steps are performed by singularly referenced 
   functions for which default instances already supplied to Figure during construction.</p>
 <h2><a href="#figure-constructor-parameters" name="figure-constructor-parameters" class="anchor">
@@ -157,9 +157,9 @@ range:         Option[(Double, Double)] = None
 xTicks:        (Double, Double) =&gt; Seq[(Double, String)] = Ticks.ticks10
 yTicks:        (Double, Double) =&gt; Seq[(Double, String)] = Ticks.ticks5
 </code></pre>
-<p>Based on these parameters, prior to executing drawing pipeline, <code>DrawingContext</code> object is created that contains all objects and 
-  functions required for pipeline steps to draw themselves. <code>DrawingContext</code> contains important figure dimensions 
-  such as <code>imageWidth, imageHeight, leftPadding, rightPadding, topPadding, bottomPadding</code>, and a set of functions and other objects. 
+<p>Based on these parameters, prior to executing drawing pipeline, <code>DrawingContext</code> object is created. It contains important figure dimensions 
+  such as <code>imageWidth, imageHeight, leftPadding, rightPadding, topPadding, bottomPadding</code>, and a set of functions and other objects 
+  required for pipeline steps to draw themselves. 
   Following image provides visual illustration for properties of the figure encapsulated in <code>DrawingContext</code>:</p>
 <p><img src="AnatomyOfSPlotFigure.png" /></p>
 <h2><a href="#pipeline-step-functions" name="pipeline-step-functions" class="anchor"><span class="anchor-link"></span></a>Pipeline Step Functions</h2>
