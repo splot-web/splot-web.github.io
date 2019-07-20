@@ -138,7 +138,10 @@ def main(args: Array[String]): Unit = {
 }
 </code></pre>
 <p><img src="scatter-plot-1.png" /></p>
-<p>Due to the high density of points at the centers of distributions internal structure is not really visible. You cannot see that there are too peaks in there. Common solution to this problem is to plot points of the distribution semi-transparent. Since color density of semi-transparent objects is additive, but adjusting value of alpha channel and point size we can make dense scatter plot to reveal its internal structure. We can do that like so:</p>
+<p>Due to the high density of points at the centers of distributions internal structure is not really visible. 
+  You cannot see that there are too peaks in there. Common solution to this problem is to plot points of the 
+  distribution semi-transparent. Since color density of semi-transparent objects is additive, by adjusting value 
+  of alpha channel and point size we can make dense scatter plot to reveal its internal structure. We can do that like so:</p>
 <pre class="prettyprint"><code class="language-scala">// Alpha channel is set to 255 * fa. Fully opaque &#39;fa&#39; (default) value is 1 and
 // fully transparent is 0.
 fig.scatter(gs, pt = &quot;.&quot;, fa = 0.036)
