@@ -123,12 +123,12 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 </code></pre>
 <p>This will bring all of the important implicits into the scope without which this library may not work.</p>
 <h2><a href="#figure" name="figure" class="anchor"><span class="anchor-link"></span></a>Figure</h2>
-<p>Central class in the SPlot library is <code>Figure</code> to which plot elements are added and then displayed. 
+<p>Central class in the SPlot library is <code>Figure</code> to which plot elements are added and then displayed.
   Every figure constructor parameter is populated with default values and you can just create it like so</p>
 <pre class="prettyprint"><code class="language-scala">val fig = new Figure()
 </code></pre>
-<p>However, it is likely that you will not be satisfied with defaults and therefore will most likely supply different values. 
-  For example, following code creatse <code>Figure</code> with custom title, labels on both axis and parameter to display grid.</p>
+<p>It is likely, however, that you will not be satisfied with defaults and will supply different values for some of them.
+  For example, following code creates <code>Figure</code> with custom title, labels on both axis, and parameter to display grid.</p>
 <pre class="prettyprint"><code class="language-scala">val fig = new Figure(
   title = &quot;Signal of ...&quot;,
   xLabel = &quot;t - time in seconds&quot;,
@@ -136,18 +136,20 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
   showGrid = true
 )
 </code></pre>
-<p>Another common thing to change is domain and range of the plot. By default domain and range of the polot are 
-  set to <code>None</code>, which means that domain and range are automatically derived from added plot elements. 
-  However, often you may want to have fixed domain or range. That is acomplished by adding <code>(min, max)</code> tuples 
+<p>Another common thing to change is figures' domain and range. By default domain and range are
+  set to <code>None</code>, which means that their values are automatically derived from added plot elements.
+  Often, however, you may want to have domain or range fixed. That is acomplished by adding <code>(min, max)</code> tuples
   to <code>Figure.domain|range</code> values.</p>
 <pre class="prettyprint"><code class="language-scala">val fig = new Figure(
   domain = (-10, 10),
   range = (0.0, 3.0)
 )
 </code></pre>
-<p>Ticks on both axis are automatically derived by means of default functions supplied to <code>xTicks</code> and <code>yTicks</code> arguments. 
-  These functions that receive range along corresponding axis and return sequence of <code>(Double, String)</code> tuples. First element of these tuples 
-  is a position at which tick is to be drawn and second is corresponding label. Several utility function are available to make it easier to supply custom ticks. To disable all ticks you can use class <code>Ticks(...)</code> without any arguments.</p>
+<p>Ticks on both axis are automatically derived by means of default functions supplied to <code>xTicks</code> and <code>yTicks</code>
+  of <code>Figure</code> constructor arguments. These functions receive range along corresponding axis and return sequence
+  of <code>(Double, String)</code> tuples. First element of these tuples is a position at which tick is to be drawn, and second
+  is corresponding label. Several utility function are available to make it easier to supply custom ticks.
+  To disable all ticks you can use class <code>Ticks(...)</code> without any arguments.</p>
 <pre class="prettyprint"><code class="language-scala">val fig = new Figure(xTicks = Ticks(), yTicks = Ticks())`
 </code></pre>
 <p>Supplying sequence of numbers or ranges to <code>Ticks(...)</code> will create ticks at predefined positions</p>
@@ -159,22 +161,22 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <p>Plot elements are added to the figure by calling</p>
 <pre class="prettyprint"><code class="language-scala">fig.add(plotElement: PlotElement)
 </code></pre>
-<p>However, for many plot elements convenience functions exist in <code>Figure</code> that make adding them much easier.</p>
+<p>For many plot elements, however, convenience functions exist in <code>Figure</code> that make adding them much easier.</p>
 <h2><a href="#line-plot" name="line-plot" class="anchor"><span class="anchor-link"></span></a>Line Plot</h2>
-<p>Like most of the plot elements, line plot is derived from sequence of x-y tuples <code>(Double, Double)</code> where first 
+<p>Like most of the plot elements, line plot is derived from sequence of x-y tuples <code>(Double, Double)</code> where first
   element is coordinate position along the x-axis and second along the y-axis. Thus given a sequence of data points</p>
-<pre class="prettyprint"><code class="language-scala">val data = Seq(...)
+<pre class="prettyprint"><code class="language-scala">val data = Seq((1.0, 1.0), (2.0, 1.3), (3.0, 1.1))
 </code></pre>
 <p>You can plot line plot where every two subsequent points are connected by a line using convenience function <code>Figure::plot(...)</code></p>
 <pre class="prettyprint"><code class="language-scala">fig.plot(data)
 </code></pre>
-<p>By default black color is used for all plot element, line width is 1, and line type is a solid line. That can be changed like so</p>
+<p>By default black color is used for all plot element, line width is one pixel, and line type is a solid line. That can be changed like so</p>
 <pre class="prettyprint"><code class="language-scala">fig.plot(data, lw = 2, color = &quot;blue&quot;, lt = &quot;--&quot;)
 </code></pre>
 <p>Parameter <code>lw</code> stands for &ldquo;line width&rdquo; and defines width of the line in pixels.</p>
 <p>Parameter <code>color</code> is actually of type <code>java.awt.Color</code> but following colors can be passed by implicit conversion from strings <code>&quot;red&quot;</code>, <code>&quot;green&quot;</code>, <code>&quot;blue&quot;</code>, <code>&quot;black&quot;</code>, <code>&quot;cyan&quot;</code>, <code>&quot;gray&quot;</code> <code>&quot;lightgray&quot;</code>, <code>&quot;magenta&quot;</code>, <code>&quot;orange&quot;</code>, <code>&quot;pink&quot;</code>, <code>&quot;white&quot;</code>, <code>&quot;yellow&quot;</code>.</p>
 <p>Likewise, line type (&ldquo;lt&rdquo;) is of type <code>LineType</code> and can be one of <code>SOLID</code>, <code>DASHES</code>, <code>DASHES_AND_DOTS</code>, <code>DOTS</code> and that can also be expressed by corresponding strings <code>&quot;-&quot;</code>, <code>&quot;--&quot;</code>, <code>&quot;-.&quot;</code>, <code>&quot;.&quot;</code></p>
-<p>Alternatively, you can use <code>LinePlot</code> class which is a <code>PlotElement</code> and add it to the figure like so:</p>
+<p>Alternatively, you can use <code>LinePlot</code> class, which is a <code>PlotElement</code>, and add it to the figure like so:</p>
 <pre class="prettyprint"><code class="language-scala">fig.add(LinePlot(data))
 </code></pre>
 <h2><a href="#scatter-plot" name="scatter-plot" class="anchor"><span class="anchor-link"></span></a>Scatter Plot</h2>
@@ -184,29 +186,29 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <p>or using convenience function <code>Figure::scatter(...)</code></p>
 <pre class="prettyprint"><code class="language-scala">fig.scatter(data)
 </code></pre>
-<p>Several different point types/shapes can be used with it. Default is <code>PointType.Dot</code>. For example, following will plot scatter plot 
+<p>Several different point types/shapes can be used with it. Default is <code>PointType.Dot</code>. For example, following will plot scatter-plot
   using unfilled circles of radius 9 pixels:</p>
 <pre class="prettyprint"><code class="language-scala">fig.scatter(data, pt = &quot;o&quot;, ps = 9)
 </code></pre>
-<p>Parameter <code>pt</code> stands for &ldquo;<em>point type</em>&rdquo;, <code>ps</code> for &ldquo;<em>point size</em>&rdquo;. Like for color for 
-  point type there should be in scope explicit conversion from string into <code>PointType</code> instances, which are <code>Dot</code>, 
-  <code>Cross</code>, <code>X</code>, <code>Square</code>, <code>Diamond</code> and <code>Circle</code> and their corresponding string 
+<p>Parameter <code>pt</code> stands for &ldquo;<em>point type</em>&rdquo;, <code>ps</code> for &ldquo;<em>point size</em>&rdquo;. Like for color, for
+  point type there should be in scope explicit conversion from string into <code>PointType</code> instances, which are <code>Dot</code>,
+  <code>Cross</code>, <code>X</code>, <code>Square</code>, <code>Diamond</code> and <code>Circle</code> and their corresponding string
   names <code>&quot;.&quot;</code>, <code>&quot;+&quot;</code>, <code>&quot;x&quot;</code>, <code>&quot;s&quot;</code>, <code>&quot;d&quot;</code>
-  and <code>&quot;o&quot;</code>. Square, diamond and circle are drawn as unfilled shapes, which means that they are drawn as outlines 
+  and <code>&quot;o&quot;</code>. Square, diamond and circle are drawn as unfilled shapes, which means that they are drawn as outlines
   and parameter <code>color</code> refers to the color of that outline. To make them filled objects one needs to set <code>fc</code> (fill color)
-  parameter which by default is set to <code>None</code>. In addition you can set transparency of the fill color by changing <code>fa</code> 
-  (fill alpha) which varies from 0.0 (full transparency) to 1.0 (fully opaque, default value). This value of alpha however does not affect 
+  parameter which by default is set to <code>None</code>. In addition you can set transparency of the fill color by changing <code>fa</code>
+  (fill alpha) which varies from 0.0 (full transparency) to 1.0 (fully opaque, default value). This value of alpha however does not affect
   transparency of outline. If outline is too obscuring, it can be made filly transparent while fill a semi-transparent like so:</p>
 <pre class="prettyprint"><code class="language-scala">fig.scatter(data, pt = &quot;d&quot;, ps = 9, fc = &quot;blue&quot;, fa = 0.01, color = new Color(0, 0, 0, 0))
 </code></pre>
 <p>The 4th parameter passed to <code>Color</code> constructor is alpha; 0 value meaning fully transparent.</p>
-<p><code>PointType.Dot</code> is a special type drawn as just filled square without outline and setting <code>fa</code> for such plots 
+<p><code>PointType.Dot</code> is a special type drawn as just filled square without outline and setting <code>fa</code> for such plots
   does affect its transparency while <code>fc</code> parameter has no effect.</p>
 <h2><a href="#zscatter-plot" name="zscatter-plot" class="anchor"><span class="anchor-link"></span></a>ZScatter Plot</h2>
 <p>Similar to scatter plot, color of the point is derived from supplied colormap and <code>zValue</code> array.</p>
 <h2><a href="#rectangle" name="rectangle" class="anchor"><span class="anchor-link"></span></a>Rectangle</h2>
-<p>Rectangle plot is a variant of <code>Shape</code> plot that draws rectangles. At minimum one needs to supply anchor point (lower 
-  left corner or rectangle), and rectangle width and height.</p>
+<p>Rectangle plot is a variant of <code>Shape</code> plot that draws rectangles. At minimum one needs to supply anchor point (lower
+  left corner of rectangle), and rectangle width and height.</p>
 <pre class="prettyprint"><code class="language-scala">fig.rectangle(anchor = (5, 6), width = 2, height = 3)
 </code></pre>
 <p>By default rectangle will be drawn as outline of solid blue line with width of one pixel. All of these parameters can be explicitly set</p>
@@ -221,19 +223,19 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 )
 </code></pre>
 <h2><a href="#bar-plot" name="bar-plot" class="anchor"><span class="anchor-link"></span></a>Bar Plot</h2>
-<p>Bar plot is a composite plot assembled from many rectangles. In order to display properly it is required to pass data sequence 
-  sorted along the x-axis. For each point it draws filled rectangle from 0 on the y-axis up to the y value for this point. 
+<p>Bar plot is a composite plot assembled from many rectangles. In order to display properly it is required to pass data sequence
+  sorted along the x-axis. For each point it draws filled rectangle from 0 on the y-axis up to the y value for this point.
   By default width of these bars/rectangles fills up to the next point, i.e. there are no gaps between bars.</p>
 <pre class="prettyprint"><code class="language-scala">fig.barplot(data)
 </code></pre>
-<p>Default fill color is yellow and edge color is black drawn as solid lines of one pixel width. Fill color is fully opaque. 
-  These parameters can be explicitly set though</p>
+<p>Default fill color is yellow and edge color is black drawn as solid lines of one pixel width. Fill color is fully opaque.
+  Like for other plots default parameters can be overriden, as in the following example:</p>
 <pre class="prettyprint"><code class="language-scala">fig.barplot(data, color = &quot;cyan&quot;, edgeColor = &quot;blue&quot;, edgeWidth = 2, alpha = 0.1)
 </code></pre>
 <p>Notice that here <code>color</code> parameter sets fill color. By setting <code>edgeWidth</code> to 0 one can remove outline altogether.</p>
-<p>Width of the bars and if there is gap between them is controlled by <code>width</code> parameter which is a function that returns width of the 
-  bar when called. For each bar it receives distance to the next data point and returns distance to be used for drawing current bar. 
-  Default function is identity, which means that bars are drawn edge to edge without any space between bars. Thus we can introduce fixed 
+<p>Width of the bars and if there is gap between them is controlled by <code>width</code> parameter which is a function that returns width of the
+  bar when called. For each bar it receives distance to the next data point and returns distance to be used for drawing current bar.
+  Default function is identity, which means that bars are drawn edge to edge without any space between bars. Thus we can introduce fixed
   width for bars like so</p>
 <pre class="prettyprint"><code class="language-scala">fig.barplot(data, width = _ =&gt; 0.7)
 </code></pre>
@@ -241,29 +243,31 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 <pre class="prettyprint"><code class="language-scala">fig.barplot(data, width = w =&gt; 0.7 * w)
 </code></pre>
 <h2><a href="#heat-map-plot" name="heat-map-plot" class="anchor"><span class="anchor-link"></span></a>Heat-map Plot</h2>
-<p>Heatmap like plot is made by adding <code>ZMapPlot</code> object to the figure or using convenience function <code>map(...)</code>. 
-  This plot is defined at minimum by supplying <code>f: (Double, Double) =&gt; Double</code> function that maps arbitrary point in xy-plane 
-  into some value and parameters <code>xDomain: (Double, Double)</code> and <code>yDomain: (Double, Double)</code> that define rectangular 
-  overarching domain on which supplied function <code>f(x, y)</code> is assumed to be defined. This domain can farther be shaped by use 
+<p>Heatmap like plot is made by adding <code>ZMapPlot</code> object to the figure or using convenience function <code>map(...)</code>.
+  This plot is defined at minimum by supplying <code>f: (Double, Double) =&gt; Double</code> function that maps arbitrary point in xy-plane
+  into some value and parameters <code>xDomain: (Double, Double)</code> and <code>yDomain: (Double, Double)</code> that define rectangular
+  overarching domain on which supplied function <code>f(x, y)</code> is assumed to be defined. This domain can farther be shaped by use
   of <code>inDomain</code> function (see below).</p>
-<p>At any zoom level for every pixel of the plot x and y coordinates are computed and, assuming that they fall within defined domain, 
-  z value <code>f(x,y)</code> is computed and a color picked from provided colormap (default is viridis).Thus,
+<p>At any zoom level for every pixel of the plot x and y coordinates are computed and, assuming that they fall within defined domain,
+  z value <code>f(x,y)</code> is computed and a color picked from provided colormap (default is <code>viridis</code>).Thus,
   assuming that <code>f(x,y)</code> function is defined, the simplest map plot defined on a certain rectangle can be drawn like so</p>
 <pre class="prettyprint"><code class="language-scala">def f(x: Double, y:Double): Double = { ... }
 
 fig.map(f, xDomain = (0, 10), yDomain = (0, 1))
 </code></pre>
-<p>By default at the time of plotting this plot range of the z-values will be recorded and complete color map range will be mapped to 
-  this range. This sometimes can lead to abrupt changes in color when varying configuration parameters of <code>f</code> function. 
-  To fix mapping of z values to colormap range one can pass explicitly <code>zRange</code> value. For example, following code maps 
+<p>By default at the time of plotting this plot range of the z-values will be recorded and complete color map range will be mapped to
+  this range. This sometimes can lead to abrupt changes in color when varying configuration parameters of <code>f</code> function.
+  To fix mapping of z values to colormap range one can pass explicitly <code>zRange</code> value. For example, following code maps
   range of z-values from 0 to 10 into provided colormap.</p>
 <pre class="prettyprint"><code class="language-scala">fig.map(f, xDomain = (0, 10), yDomain = (0, 1), zRange = (0, 10))
 </code></pre>
 <p>Note that doing so clips color value derived from z-values that fell outsize of this range to the lower and upper bounds of colormap.</p>
-<p>Colormap is a function <code>Double =&gt; java.awt.Color</code> that maps numbers in range <code>[0,1]</code> into some color. By default <code>map(...)</code> receives <code>viridis</code> colormap. The only other available colormap is <code>inferno</code>. It can be set like so:</p>
+<p>Colormap is a function <code>Double =&gt; java.awt.Color</code> that maps numbers in range <code>[0,1]</code> into some color.
+  By default <code>map(...)</code> receives <code>viridis</code> colormap. The only other available colormap is <code>inferno</code>.
+  It can be set like so:</p>
 <pre class="prettyprint"><code class="language-scala">fig.map(f, xDomain = (0, 10), yDomain = (0, 1),  colorMap = colormaps.inferno)
 </code></pre>
-<p>Setting <code>inDomain</code> parameter to custom function allow users to farther restrict domain of the plot and make 
+<p>Setting <code>inDomain</code> parameter to custom function allow users to farther restrict domain of the plot and make
 it non-rectangular. For example, we can define square domain with round hole of diameter 1 like so:</p>
 <pre class="prettyprint"><code class="language-scala">fig.map(
     f, xDomain = (-10, 10), yDomain = (-10, 10),
