@@ -146,10 +146,10 @@ C16.952,7,17,6.553,17,6c0-0.553-0.048-1-0.6-1H3.6C3.048,5,3,5.447,3,6C3,6.553,3.
 )
 </code></pre>
 <p>Ticks on both axis are automatically derived by means of default functions supplied to <code>xTicks</code> and <code>yTicks</code>
-  of <code>Figure</code> constructor arguments. These functions receive range along corresponding axis and return sequence
+  arguments of <code>Figure</code> constructor. These functions receive range along corresponding axis and return sequence
   of <code>(Double, String)</code> tuples. First element of these tuples is a position at which tick is to be drawn, and second
   is corresponding label. Several utility function are available to make it easier to supply custom ticks.
-  To disable all ticks you can use class <code>Ticks(...)</code> without any arguments.</p>
+  To disable all ticks you can supply instance of <code>Ticks</code> created without any arguments.</p>
 <pre class="prettyprint"><code class="language-scala">val fig = new Figure(xTicks = Ticks(), yTicks = Ticks())`
 </code></pre>
 <p>Supplying sequence of numbers or ranges to <code>Ticks(...)</code> will create ticks at predefined positions</p>
